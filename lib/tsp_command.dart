@@ -19,7 +19,7 @@ class TscCommand {
   }
 
   Future<void> gap(int gap) async {
-    await methodChannel.invokeMethod<void>('gap');
+    await methodChannel.invokeMethod<void>('gap', gap);
   }
 
   /// speed : 2 ~ 12
