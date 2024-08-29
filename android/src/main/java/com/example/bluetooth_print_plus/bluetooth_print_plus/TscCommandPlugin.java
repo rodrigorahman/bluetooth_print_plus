@@ -105,11 +105,12 @@ public class TscCommandPlugin implements FlutterPlugin, MethodCallHandler, Reque
             case "text":
                 Integer xMulti = call.argument("xMulti");
                 Integer yMulti = call.argument("yMulti");
+                String font = call.argument("font");
                 assert x != null;
                 assert y != null;
                 this.tscCommand.addText(
                         x, y,
-                        LabelCommand.FONTTYPE.SIMPLIFIED_24_CHINESE,
+                        LabelCommand.FONTTYPE.valueOf(font),
                         LabelCommand.ROTATION.valueOf("ROTATION_" + rotation),
                         LabelCommand.FONTMUL.valueOf( "MUL_" + xMulti), LabelCommand.FONTMUL.valueOf("MUL_" + yMulti), content
                 );
@@ -179,6 +180,27 @@ public class TscCommandPlugin implements FlutterPlugin, MethodCallHandler, Reque
                     x, y,
                     endX, endY,
                     linThickness
+                );
+                result.success(true);
+                break;
+            case "codepage":
+                String codepage = call.argument("codepage");
+                this.tscCommand.addCodePage(LabelCommand.CODEPAGE.valueOf(codepage));
+                result.success(true);
+                break;
+
+            case "textUnicode":
+                Integer uniXMulti = call.argument("xMulti");
+                Integer uniYMulti = call.argument("yMulti");
+                String uniFont = call.argument("font");
+                String type = call.argument("type");
+                assert x != null;
+                assert y != null;
+                this.tscCommand.addUnicodeText(
+                        x, y,
+                        LabelCommand.FONTTYPE.valueOf(uniFont),
+                        LabelCommand.ROTATION.valueOf("ROTATION_" + rotation),
+                        LabelCommand.FONTMUL.valueOf( "MUL_" + uniXMulti), LabelCommand.FONTMUL.valueOf("MUL_" + uniYMulti), content, type
                 );
                 result.success(true);
                 break;

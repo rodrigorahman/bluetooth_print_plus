@@ -40,6 +40,7 @@ class TscCommand {
     await methodChannel.invokeMethod<void>('size', params);
   }
 
+
   Future<void> text({
     required String content,
     int x = 0,
@@ -47,6 +48,8 @@ class TscCommand {
     int xMulti = 1,
     int yMulti = 1,
     Rotation rotation = Rotation.r_0,
+    String font = 'SIMPLIFIED_24_CHINESE',
+    bool center = false
   }) async {
     int rota = EnumTool.getRotation(rotation);
     Map<String, dynamic> params = {
@@ -55,9 +58,39 @@ class TscCommand {
       "y": y,
       "xMulti": xMulti,
       "yMulti": yMulti,
-      "rotation": rota
+      "rotation": rota,
+      "font": font
     };
     await methodChannel.invokeMethod<void>('text', params);
+  }
+
+   Future<void> textUnicode({
+    required String content,
+    int x = 0,
+    int y = 0,
+    int xMulti = 1,
+    int yMulti = 1,
+    Rotation rotation = Rotation.r_0,
+    String font = 'SIMPLIFIED_24_CHINESE',
+    String type = 'UTF-8'
+  }) async {
+    int rota = EnumTool.getRotation(rotation);
+    Map<String, dynamic> params = {
+      "content": content,
+      "x": x,
+      "y": y,
+      "xMulti": xMulti,
+      "yMulti": yMulti,
+      "rotation": rota,
+      "font": font,
+      "type": type,
+    };
+    await methodChannel.invokeMethod<void>('textUnicode', params);
+  }
+
+  Future<void> codepage(String codepage) async {
+    Map<String, dynamic> params = {"codepage": codepage};
+    await methodChannel.invokeMethod<void>('codepage', params);
   }
 
   Future<void> image({
