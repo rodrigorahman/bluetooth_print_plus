@@ -40,17 +40,15 @@ class TscCommand {
     await methodChannel.invokeMethod<void>('size', params);
   }
 
-
-  Future<void> text({
-    required String content,
-    int x = 0,
-    int y = 0,
-    int xMulti = 1,
-    int yMulti = 1,
-    Rotation rotation = Rotation.r_0,
-    String font = 'SIMPLIFIED_24_CHINESE',
-    bool center = false
-  }) async {
+  Future<void> text(
+      {required String content,
+      int x = 0,
+      int y = 0,
+      int xMulti = 1,
+      int yMulti = 1,
+      Rotation rotation = Rotation.r_0,
+      String font = 'SIMPLIFIED_24_CHINESE',
+      bool center = false}) async {
     int rota = EnumTool.getRotation(rotation);
     Map<String, dynamic> params = {
       "content": content,
@@ -64,16 +62,15 @@ class TscCommand {
     await methodChannel.invokeMethod<void>('text', params);
   }
 
-   Future<void> textUnicode({
-    required String content,
-    int x = 0,
-    int y = 0,
-    int xMulti = 1,
-    int yMulti = 1,
-    Rotation rotation = Rotation.r_0,
-    String font = 'SIMPLIFIED_24_CHINESE',
-    String type = 'UTF-8'
-  }) async {
+  Future<void> textUnicode(
+      {required String content,
+      int x = 0,
+      int y = 0,
+      int xMulti = 1,
+      int yMulti = 1,
+      Rotation rotation = Rotation.r_0,
+      String font = 'SIMPLIFIED_24_CHINESE',
+      String type = 'UTF-8'}) async {
     int rota = EnumTool.getRotation(rotation);
     Map<String, dynamic> params = {
       "content": content,
@@ -173,6 +170,19 @@ class TscCommand {
       "linThickness": linThickness,
     };
     await methodChannel.invokeMethod<void>('box', params);
+  }
+
+  Future<void> addCommand(String command) async {
+    Map<String, dynamic> params = {
+      "command": command,
+    };
+    await methodChannel.invokeMethod<void>('addCommand', params);
+  }
+  Future<void> addCommandBytes(Uint8List command) async {
+    Map<String, dynamic> params = {
+      "command": command,
+    };
+    await methodChannel.invokeMethod<void>('addCommandByte', params);
   }
 
   Future<void> print(int copies) async {

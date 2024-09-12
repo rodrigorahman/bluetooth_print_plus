@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * BluetoothPrintPlusPlugin
@@ -173,7 +174,36 @@ public class BluetoothPrintPlusPlugin
         result.success(mBluetoothAdapter.isEnabled());
         break;
       case "isConnected":
-        result.success(threadPool != null);
+//        Map<String, Object> argsIsConnected = call.arguments();
+//        assert argsIsConnected != null;
+//        final String addressIsConnected = (String) argsIsConnected.get("address");
+//        boolean isPrinterPaired = false;
+//        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+//        for (BluetoothDevice device : pairedDevices) {
+//              if (device.getAddress().equals(addressIsConnected)) {
+//                  isPrinterPaired = true;
+//                  break;
+//              }
+//          }
+//          if (isPrinterPaired) {
+//              Log.e("Bluetooth", "Impressora está emparelhada.");
+//          } else {
+//              Log.e("Bluetooth", "Impressora não está emparelhada.");
+//          }
+//
+//        PrinterDevices blueTooth = new PrinterDevices.Build()
+//                .setContext(context)
+//                .setConnMethod(ConnMethod.BLUETOOTH)
+//                .setMacAddress(mac)
+//                .setCommand(Command.TSC)
+//                .build();
+//
+        if(Printer.portManager != null){
+          result.success(Printer.getConnectState());
+        }
+
+        result.success(false);
+
         break;
       case "startScan": {
         startScan(call, result);
@@ -352,7 +382,11 @@ public class BluetoothPrintPlusPlugin
               .setMacAddress(mac)
               .setCommand(Command.TSC)
               .build();
-          Printer.connect(blueTooth);
+          try{
+            Printer.connect(blueTooth);
+          }catch(Exception e) {
+            Log.e("BluetoothConnection", "Erro ao conectar: " + e.getMessage());
+          }
         }
       }
     });

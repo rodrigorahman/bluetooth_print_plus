@@ -34,8 +34,9 @@ class BluetoothPrintPlus {
   Future<bool> get isOn async =>
       await _channel.invokeMethod('isOn').then<bool>((d) => d);
 
-  Future<bool?> get isConnected async =>
-      await _channel.invokeMethod('isConnected');
+  Future<bool?> isConnected(BluetoothDevice device) async{
+      return await _channel.invokeMethod('isConnected', device.toJson());
+  }
 
   final BehaviorSubject<bool> _isScanning = BehaviorSubject.seeded(false);
 

@@ -122,7 +122,7 @@ public class TscCommandPlugin implements FlutterPlugin, MethodCallHandler, Reque
                 assert x != null;
                 assert y != null;
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                this.tscCommand.addBitmap(x, y, LabelCommand.BITMAP_MODE.OVERWRITE, bitmap.getWidth(), bitmap);
+                this.tscCommand.drawImage(x, y, bitmap.getWidth(), bitmap);
                 result.success(true);
                 break;
             case "barCode":
@@ -152,7 +152,7 @@ public class TscCommandPlugin implements FlutterPlugin, MethodCallHandler, Reque
                 assert cellWidth != null;
                 this.tscCommand.addQRCode(
                     x, y,
-                    LabelCommand.EEC.LEVEL_M,
+                    LabelCommand.EEC.LEVEL_L,
                     cellWidth,
                     LabelCommand.ROTATION.valueOf("ROTATION_" + rotation),
                     content
@@ -202,6 +202,16 @@ public class TscCommandPlugin implements FlutterPlugin, MethodCallHandler, Reque
                         LabelCommand.ROTATION.valueOf("ROTATION_" + rotation),
                         LabelCommand.FONTMUL.valueOf( "MUL_" + uniXMulti), LabelCommand.FONTMUL.valueOf("MUL_" + uniYMulti), content, type
                 );
+                result.success(true);
+                break;
+            case "addCommand":
+                String command = call.argument("command");
+                this.tscCommand.addUserCommand(command);
+                result.success(true);
+                break;
+            case "addCommandByte":
+                byte[] commandByte = call.argument("command");
+                this.tscCommand.addUserCommand(commandByte);
                 result.success(true);
                 break;
             default:
